@@ -58,12 +58,13 @@ public class LaboratorioService {
         laboratorio.setDireccion(dto.getDireccion());
         laboratorio.setTelefono(dto.getTelefono());
         laboratorio.setHabilitado(dto.getHabilitado());
-
+        laboratorio.getTiposAnalisis().clear(); 
         if (dto.getTiposAnalisisIds() != null) {
             Set<TipoAnalisis> tipos = new HashSet<>(tipoAnalisisRepository.findAllById(dto.getTiposAnalisisIds()));
             laboratorio.setTiposAnalisis(tipos);
         }
-        return  laboratorioRepository.save(laboratorio);
+        Laboratorio updatedLaboratorio = laboratorioRepository.save(laboratorio);
+        return  updatedLaboratorio;
     }
 
     public void deshabiliarLaboratorio(Long id) {
@@ -73,5 +74,11 @@ public class LaboratorioService {
         
         laboratorio.setHabilitado(false);
         laboratorioRepository.save(laboratorio);
+    }
+
+    public Laboratorio getById(Long id) {
+        log.info("Obteniendo laboratorio con ID: {}", id);
+        return laboratorioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Laboratorio no encontrado con ID: " + id));
     }
 }

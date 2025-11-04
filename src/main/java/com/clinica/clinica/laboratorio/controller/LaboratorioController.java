@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Slf4j
@@ -62,4 +64,13 @@ public class LaboratorioController {
         laboratorioService.deshabiliarLaboratorio(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Laboratorio> getById(@PathVariable Long id) {
+        
+        log.info("[GET] Obtener laboratorio con ID: {}", id);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(laboratorioService.getById(id));
+    }
+    
 }
