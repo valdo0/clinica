@@ -1,15 +1,12 @@
 package com.clinica.clinica.usuario.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.clinica.clinica.exception.ResourceNotFoundException;
 import com.clinica.clinica.usuario.model.Usuario;
 import com.clinica.clinica.usuario.repository.UsuarioRepository;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Service
@@ -23,7 +20,7 @@ public class UsuarioService {
 
     public Usuario crearUsuario(Usuario usuario) {
         log.info("Creando usuario con email: {}", usuario.getEmail());
-        if(usuarioRepository.existsByEmail(usuario.getEmail())) {
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             log.warn("El email {} ya está registrado", usuario.getEmail());
             throw new IllegalArgumentException("El email ya está registrado");
         }
@@ -31,7 +28,7 @@ public class UsuarioService {
         log.info("Usuario creado con ID: {}", nuevoUsuario.getId());
         return nuevoUsuario;
     }
-    
+
     public List<Usuario> obtenerUsuarios() {
         log.info("Obteniendo todos los usuarios");
         return usuarioRepository.findAll();
@@ -52,10 +49,12 @@ public class UsuarioService {
                 .orElseThrow(() -> {
                     log.warn("Usuario con ID {} no encontrado", id);
                     return new ResourceNotFoundException("Usuario no encontrado");
-                });;
-        log.info("Verificando si el email {} ya está registrado comparando con {}", usuarioDetalles.getEmail(),usuarioExistente.getEmail());
+                });
+        ;
+        log.info("Verificando si el email {} ya está registrado comparando con {}", usuarioDetalles.getEmail(),
+                usuarioExistente.getEmail());
         if (!usuarioExistente.getEmail().equals(usuarioDetalles.getEmail()) &&
-            usuarioRepository.existsByEmail(usuarioDetalles.getEmail())) {
+                usuarioRepository.existsByEmail(usuarioDetalles.getEmail())) {
             log.warn("El email {} ya está registrado", usuarioDetalles.getEmail());
             throw new IllegalArgumentException("El email ya está registrado");
         }
@@ -71,7 +70,7 @@ public class UsuarioService {
 
     public void eliminarUsuario(Long id) {
         log.info("Eliminando usuario con ID: {}", id);
-        if(!usuarioRepository.existsById(id)) {
+        if (!usuarioRepository.existsById(id)) {
             log.warn("Usuario con ID {} no encontrado para eliminar", id);
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
@@ -87,4 +86,5 @@ public class UsuarioService {
                     return new ResourceNotFoundException("Usuario no encontrado");
                 });
     }
+
 }

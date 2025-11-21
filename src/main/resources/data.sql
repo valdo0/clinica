@@ -1,12 +1,12 @@
 -- Tabla USUARIO
-INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol)
-VALUES ('Admin', 'admin@clinica.cl', '+56911111111', CURRENT_DATE, 'ADMIN');
+INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol,password)
+VALUES ('Admin', 'admin@clinica.cl', '+56911111111', CURRENT_DATE, 'ADMIN','admin');
 
-INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol)
-VALUES ('Juan Pérez', 'juan@clinica.cl', '+56922222222', CURRENT_DATE, 'USER');
+INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol,password)
+VALUES ('Juan Pérez', 'juan@clinica.cl', '+56922222222', CURRENT_DATE, 'LABMANAGER','juan');
 
-INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol)
-VALUES ('Sebastián Valdivia', 'se.valdivia@duocuc.cl', '+56922222222', CURRENT_DATE, 'USER');
+INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol,password)
+VALUES ('Sebastián Valdivia', 'se.valdivia@duocuc.cl', '+56922222222', CURRENT_DATE, 'PACIENTE','sebastian');
 
 -- Tabla TIPO_ANALISIS
 INSERT INTO TIPO_ANALISIS (nombre, descripcion)
@@ -40,3 +40,13 @@ VALUES (2, 3);
 
 INSERT INTO LABORATORIO_TIPO_ANALISIS (laboratorio_id, tipo_analisis_id)
 VALUES (3, 3);
+
+-- Tabla ANALISIS
+INSERT INTO ANALISIS (laboratorio_id, tipo_analisis_id, usuario_id, estado, descripcion, comentarios, fecha_solicitud, fecha_finalizacion)
+VALUES (1, 1, 3, 'PENDIENTE', 'Solicitud de hemograma de rutina', null, CURRENT_TIMESTAMP, null);
+
+INSERT INTO ANALISIS (laboratorio_id, tipo_analisis_id, usuario_id, estado, descripcion, comentarios, fecha_solicitud, fecha_finalizacion)
+VALUES (1, 2, 3, 'TERMINADO', 'Examen de orina completo', 'Resultados normales', CURRENT_TIMESTAMP - 2, CURRENT_TIMESTAMP - 1);
+
+INSERT INTO ANALISIS (laboratorio_id, tipo_analisis_id, usuario_id, estado, descripcion, comentarios, fecha_solicitud, fecha_finalizacion)
+VALUES (2, 3, 3, 'CANCELADO', 'Chequeo de colesterol', 'Cancelado por el paciente', CURRENT_TIMESTAMP - 5, null);

@@ -1,4 +1,4 @@
-package com.clinica.clinica.laboratorio.dto;
+package com.clinica.clinica.laboratorio.model;
 
 import java.util.Set;
 

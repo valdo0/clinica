@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
-import com.clinica.clinica.laboratorio.dto.LaboratorioRequestDTO;
+
 import com.clinica.clinica.laboratorio.model.Laboratorio;
+import com.clinica.clinica.laboratorio.model.LaboratorioRequestDTO;
 import com.clinica.clinica.laboratorio.model.TipoAnalisis;
 import com.clinica.clinica.laboratorio.repository.LaboratorioRepository;
 import com.clinica.clinica.laboratorio.repository.TipoAnalisisRepository;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Service
@@ -21,7 +21,8 @@ public class LaboratorioService {
     private final LaboratorioRepository laboratorioRepository;
     private final TipoAnalisisRepository tipoAnalisisRepository;
 
-    public LaboratorioService(LaboratorioRepository laboratorioRepository, TipoAnalisisRepository tipoAnalisisRepository) {
+    public LaboratorioService(LaboratorioRepository laboratorioRepository,
+            TipoAnalisisRepository tipoAnalisisRepository) {
         this.laboratorioRepository = laboratorioRepository;
         this.tipoAnalisisRepository = tipoAnalisisRepository;
     }
@@ -29,7 +30,7 @@ public class LaboratorioService {
     public Laboratorio crearLaboratorio(LaboratorioRequestDTO dto) {
         log.info("Creando nuevo laboratorio con nombre: {}", dto.getNombre());
         Laboratorio laboratorio = new Laboratorio();
-        if(laboratorioRepository.existsByNombreIgnoreCase(dto.getNombre())) {
+        if (laboratorioRepository.existsByNombreIgnoreCase(dto.getNombre())) {
             throw new RuntimeException("Ya existe un laboratorio con el nombre: " + dto.getNombre());
         }
         laboratorio.setNombre(dto.getNombre());
@@ -58,20 +59,20 @@ public class LaboratorioService {
         laboratorio.setDireccion(dto.getDireccion());
         laboratorio.setTelefono(dto.getTelefono());
         laboratorio.setHabilitado(dto.getHabilitado());
-        laboratorio.getTiposAnalisis().clear(); 
+        laboratorio.getTiposAnalisis().clear();
         if (dto.getTiposAnalisisIds() != null) {
             Set<TipoAnalisis> tipos = new HashSet<>(tipoAnalisisRepository.findAllById(dto.getTiposAnalisisIds()));
             laboratorio.setTiposAnalisis(tipos);
         }
         Laboratorio updatedLaboratorio = laboratorioRepository.save(laboratorio);
-        return  updatedLaboratorio;
+        return updatedLaboratorio;
     }
 
     public void deshabiliarLaboratorio(Long id) {
         log.info("Deshabilitando laboratorio con ID: {}", id);
         Laboratorio laboratorio = laboratorioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Laboratorio no encontrado con ID: " + id));
-        
+
         laboratorio.setHabilitado(false);
         laboratorioRepository.save(laboratorio);
     }

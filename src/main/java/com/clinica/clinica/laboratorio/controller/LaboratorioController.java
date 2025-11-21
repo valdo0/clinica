@@ -2,9 +2,8 @@ package com.clinica.clinica.laboratorio.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.clinica.clinica.laboratorio.dto.LaboratorioRequestDTO;
 import com.clinica.clinica.laboratorio.model.Laboratorio;
+import com.clinica.clinica.laboratorio.model.LaboratorioRequestDTO;
 import com.clinica.clinica.laboratorio.service.LaboratorioService;
 
 import jakarta.validation.Valid;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @Slf4j
 @RestController
@@ -30,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LaboratorioController {
 
     private final LaboratorioService laboratorioService;
+
     public LaboratorioController(LaboratorioService laboratorioService) {
         this.laboratorioService = laboratorioService;
     }
@@ -40,21 +37,22 @@ public class LaboratorioController {
         List<Laboratorio> laboratorios = laboratorioService.getAllLaboratorios();
         return ResponseEntity.ok(laboratorios);
     }
-    
+
     @PostMapping
-    public ResponseEntity<Laboratorio> postMethodName(@Valid @RequestBody LaboratorioRequestDTO  entity) {
+    public ResponseEntity<Laboratorio> postMethodName(@Valid @RequestBody LaboratorioRequestDTO entity) {
         log.info("[POST] Crear laboratorio");
-        Laboratorio laboratorio=laboratorioService.crearLaboratorio(entity);
+        Laboratorio laboratorio = laboratorioService.crearLaboratorio(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(laboratorio);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Laboratorio> modificarLaboratorio(@PathVariable Long id, @Valid @RequestBody LaboratorioRequestDTO entity) {
-        
+    public ResponseEntity<Laboratorio> modificarLaboratorio(@PathVariable Long id,
+            @Valid @RequestBody LaboratorioRequestDTO entity) {
+
         log.info("[PUT] Modificar laboratorio con ID: {}", id);
-        Laboratorio laboratorio=laboratorioService.actualizarLaboratorio(id,entity);
+        Laboratorio laboratorio = laboratorioService.actualizarLaboratorio(id, entity);
         log.info("Laboratorio modificado con ID: {}", id);
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(laboratorio);
     }
 
@@ -67,10 +65,10 @@ public class LaboratorioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Laboratorio> getById(@PathVariable Long id) {
-        
+
         log.info("[GET] Obtener laboratorio con ID: {}", id);
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(laboratorioService.getById(id));
     }
-    
+
 }

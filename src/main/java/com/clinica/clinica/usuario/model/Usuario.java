@@ -17,8 +17,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "USUARIO",uniqueConstraints = {
-    @UniqueConstraint(name = "UK_USUARIO_EMAIL",columnNames = "EMAIL"),        
+@Table(name = "USUARIO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_USUARIO_EMAIL", columnNames = "EMAIL"),
 })
 public class Usuario {
 
@@ -45,8 +45,13 @@ public class Usuario {
     private LocalDate fechaRegistro = LocalDate.now();
 
     @NotBlank(message = "El rol es obligatorio")
-    @Pattern(regexp = "ADMIN|USER", message = "El rol debe ser ADMIN o USER")
+    @Pattern(regexp = "ADMIN|LABMANAGER|PACIENTE", message = "El rol debe ser ADMIN,LABMANAGER o PACIENTE")
     @Column(nullable = false, length = 10)
     private String rol;
-    
+
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
+    @Column(nullable = false)
+    private String password;
+
 }
