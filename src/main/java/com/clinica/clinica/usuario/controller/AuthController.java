@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.clinica.clinica.usuario.model.LoginRequestDTO;
 import com.clinica.clinica.usuario.model.LoginResponseDTO;
+import com.clinica.clinica.usuario.model.RegisterRequestDTO;
 import com.clinica.clinica.usuario.service.AuthService;
 
 @Slf4j
@@ -30,6 +31,14 @@ public class AuthController {
     public ResponseEntity<Optional<LoginResponseDTO>> login(@RequestBody LoginRequestDTO loginRequest) {
         log.info("Login request: {}", loginRequest);
         Optional<LoginResponseDTO> responseOpt = authService.login(loginRequest);
+
+        return ResponseEntity.ok(responseOpt);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Optional<LoginResponseDTO>> register(@RequestBody RegisterRequestDTO registerRequest) {
+        log.info("Register request: {}", registerRequest);
+        Optional<LoginResponseDTO> responseOpt = authService.register(registerRequest);
 
         return ResponseEntity.ok(responseOpt);
     }

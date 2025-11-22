@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.clinica.clinica.analisis.model.AnalisisRequestDTO;
 import com.clinica.clinica.analisis.model.AnalisisResponseDTO;
+import com.clinica.clinica.analisis.model.AnalisisUpdateDTO;
 import com.clinica.clinica.analisis.service.AnalisisService;
 
 import jakarta.validation.Valid;
@@ -38,6 +39,12 @@ public class AnalisisController {
         return ResponseEntity.ok(analisisService.getAllAnalisis());
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<AnalisisResponseDTO>> getAnalisisByUsuarioId(@PathVariable Long usuarioId) {
+        log.info("[GET] Obtener análisis por ID de usuario: {}", usuarioId);
+        return ResponseEntity.ok(analisisService.getAnalisisByUsuarioId(usuarioId));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AnalisisResponseDTO> getAnalisisById(@PathVariable Long id) {
         log.info("[GET] Obtener análisis con ID: {}", id);
@@ -55,7 +62,7 @@ public class AnalisisController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AnalisisResponseDTO> updateAnalisis(@PathVariable Long id,
-            @Valid @RequestBody AnalisisRequestDTO dto) {
+            @Valid @RequestBody AnalisisUpdateDTO dto) {
         log.info("[PUT] Actualizar análisis con ID: {}", id);
         try {
             AnalisisResponseDTO updatedAnalisis = analisisService.updateAnalisis(id, dto);

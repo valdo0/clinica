@@ -3,6 +3,7 @@ package com.clinica.clinica.usuario.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.clinica.clinica.exception.ResourceNotFoundException;
+import com.clinica.clinica.usuario.model.PutUsuarioDTO;
 import com.clinica.clinica.usuario.model.Usuario;
 import com.clinica.clinica.usuario.repository.UsuarioRepository;
 
@@ -43,7 +44,7 @@ public class UsuarioService {
                 });
     }
 
-    public Usuario actualizarUsuario(Long id, Usuario usuarioDetalles) {
+    public Usuario actualizarUsuario(Long id, PutUsuarioDTO usuarioDetalles) {
         log.info("Actualizando usuario con ID: {}", id);
         Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> {
@@ -51,18 +52,15 @@ public class UsuarioService {
                     return new ResourceNotFoundException("Usuario no encontrado");
                 });
         ;
-        log.info("Verificando si el email {} ya está registrado comparando con {}", usuarioDetalles.getEmail(),
-                usuarioExistente.getEmail());
-        if (!usuarioExistente.getEmail().equals(usuarioDetalles.getEmail()) &&
-                usuarioRepository.existsByEmail(usuarioDetalles.getEmail())) {
-            log.warn("El email {} ya está registrado", usuarioDetalles.getEmail());
-            throw new IllegalArgumentException("El email ya está registrado");
-        }
 
         usuarioExistente.setNombre(usuarioDetalles.getNombre());
-        usuarioExistente.setEmail(usuarioDetalles.getEmail());
         usuarioExistente.setTelefono(usuarioDetalles.getTelefono());
-        usuarioExistente.setRol(usuarioDetalles.getRol());
+        if (usuarioDetalles.getPassword() != null) {
+            usuarioExistente.setPassword(usuarioDetalles.getPassword());
+        }
+        if (usuarioDetalles.getRol() != null) {
+            usuarioExistente.setRol(usuarioDetalles.getRol());
+        }
         Usuario usuarioActualizado = usuarioRepository.save(usuarioExistente);
         log.info("Usuario con ID: {} actualizado", id);
         return usuarioActualizado;

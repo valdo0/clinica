@@ -6,6 +6,9 @@ INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol,password)
 VALUES ('Juan Pérez', 'juan@clinica.cl', '+56922222222', CURRENT_DATE, 'LABMANAGER','juan');
 
 INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol,password)
+VALUES ('Sebastián Valdivia', 'paciente@duocuc.cl', '+56922222222', CURRENT_DATE, 'PACIENTE','sebastian');
+
+INSERT INTO USUARIO (nombre, email, telefono, fecha_registro, rol,password)
 VALUES ('Sebastián Valdivia', 'se.valdivia@duocuc.cl', '+56922222222', CURRENT_DATE, 'PACIENTE','sebastian');
 
 -- Tabla TIPO_ANALISIS
@@ -49,4 +52,4 @@ INSERT INTO ANALISIS (laboratorio_id, tipo_analisis_id, usuario_id, estado, desc
 VALUES (1, 2, 3, 'TERMINADO', 'Examen de orina completo', 'Resultados normales', CURRENT_TIMESTAMP - 2, CURRENT_TIMESTAMP - 1);
 
 INSERT INTO ANALISIS (laboratorio_id, tipo_analisis_id, usuario_id, estado, descripcion, comentarios, fecha_solicitud, fecha_finalizacion)
-VALUES (2, 3, 3, 'CANCELADO', 'Chequeo de colesterol', 'Cancelado por el paciente', CURRENT_TIMESTAMP - 5, null);
+VALUES (2, 3, 4, 'CANCELADO', 'Chequeo de colesterol', 'Cancelado por el paciente', CURRENT_TIMESTAMP - 5, null);

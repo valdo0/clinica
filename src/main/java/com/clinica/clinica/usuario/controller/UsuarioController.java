@@ -3,6 +3,7 @@ package com.clinica.clinica.usuario.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.clinica.clinica.usuario.model.PutUsuarioDTO;
 import com.clinica.clinica.usuario.model.Usuario;
 import com.clinica.clinica.usuario.service.UsuarioService;
 
@@ -54,7 +55,8 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> putMethodName(@PathVariable Long id, @Valid @RequestBody Usuario entity) {
+    public ResponseEntity<Usuario> putMethodName(@PathVariable Long id,
+            @Valid @RequestBody PutUsuarioDTO entity) {
         log.info("[PUT] Actualizar usuario con ID: {}", id);
         return ResponseEntity.ok(usuarioService.actualizarUsuario(id, entity));
     }

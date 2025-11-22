@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.clinica.clinica.usuario.model.LoginRequestDTO;
 import com.clinica.clinica.usuario.model.LoginResponseDTO;
+import com.clinica.clinica.usuario.model.RegisterRequestDTO;
 import com.clinica.clinica.usuario.model.Usuario;
 import com.clinica.clinica.usuario.repository.UsuarioRepository;
 
@@ -36,5 +37,28 @@ public class AuthService {
                 usuario.get().getTelefono(),
                 usuario.get().getFechaRegistro(),
                 usuario.get().getRol()));
+    }
+
+    public Optional<LoginResponseDTO> register(RegisterRequestDTO registerRequest) {
+        log.info("Register request: {}", registerRequest);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(registerRequest.getEmail());
+        if (usuarioOpt.isPresent()) {
+            log.warn("Usuario ya existe: {}", registerRequest.getEmail());
+            throw new IllegalArgumentException("User already exists");
+        }
+        Usuario usuario = new Usuario();
+        usuario.setNombre(registerRequest.getNombre());
+        usuario.setEmail(registerRequest.getEmail());
+        usuario.setPassword(registerRequest.getPassword());
+        usuario.setTelefono(registerRequest.getTelefono());
+        usuario.setRol("PACIENTE");
+        Usuario user = usuarioRepository.save(usuario);
+        return Optional.of(new LoginResponseDTO(
+                user.getId(),
+                user.getNombre(),
+                user.getEmail(),
+                user.getTelefono(),
+                user.getFechaRegistro(),
+                user.getRol()));
     }
 }

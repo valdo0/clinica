@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.clinica.clinica.analisis.model.Analisis;
 import com.clinica.clinica.analisis.model.AnalisisRequestDTO;
 import com.clinica.clinica.analisis.model.AnalisisResponseDTO;
+import com.clinica.clinica.analisis.model.AnalisisUpdateDTO;
+import com.clinica.clinica.analisis.model.EstadoAnalisis;
 import com.clinica.clinica.analisis.repository.AnalisisRepository;
 import com.clinica.clinica.laboratorio.model.Laboratorio;
 import com.clinica.clinica.laboratorio.model.TipoAnalisis;
@@ -44,6 +46,12 @@ public class AnalisisService {
         return analisisRepository.findById(id).map(this::mapToResponseDTO);
     }
 
+    public List<AnalisisResponseDTO> getAnalisisByUsuarioId(Long usuarioId) {
+        return analisisRepository.findByUsuarioId(usuarioId).stream()
+                .map(this::mapToResponseDTO)
+                .toList();
+    }
+
     public AnalisisResponseDTO createAnalisis(AnalisisRequestDTO dto) {
         Laboratorio laboratorio = laboratorioRepository.findById(dto.getLaboratorioId())
                 .orElseThrow(() -> new RuntimeException("Laboratorio no encontrado"));
@@ -63,7 +71,7 @@ public class AnalisisService {
         return mapToResponseDTO(savedAnalisis);
     }
 
-    public AnalisisResponseDTO updateAnalisis(Long id, AnalisisRequestDTO dto) {
+    public AnalisisResponseDTO updateAnalisis(Long id, AnalisisUpdateDTO dto) {
         Analisis updatedAnalisis = analisisRepository.findById(id).map(analisis -> {
             if (dto.getLaboratorioId() != null) {
                 Laboratorio laboratorio = laboratorioRepository.findById(dto.getLaboratorioId())
@@ -75,10 +83,12 @@ public class AnalisisService {
                         .orElseThrow(() -> new RuntimeException("Tipo de análisis no encontrado"));
                 analisis.setTipoAnalisis(tipoAnalisis);
             }
-            if (dto.getUsuarioId() != null) {
-                Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-                        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-                analisis.setUsuario(usuario);
+
+            if (dto.getEstado() != null) {
+                analisis.setEstado(dto.getEstado());
+                if (dto.getEstado() == EstadoAnalisis.TERMINADO || dto.getEstado() == EstadoAnalisis.CANCELADO) {
+                    analisis.setFechaFinalizacion(java.time.LocalDateTime.now());
+                }
             }
 
             if (dto.getDescripcion() != null)
