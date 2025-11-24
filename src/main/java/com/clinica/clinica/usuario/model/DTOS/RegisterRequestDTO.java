@@ -1,16 +1,16 @@
-package com.clinica.clinica.usuario.model;
+package com.clinica.clinica.usuario.model.DTOS;
 
-public class PutUsuarioDTO {
+public class RegisterRequestDTO {
     private String nombre;
+    private String email;
     private String password;
     private String telefono;
-    private String rol;
 
-    public PutUsuarioDTO(String nombre, String password, String telefono, String rol) {
+    public RegisterRequestDTO(String nombre, String email, String password, String telefono) {
         this.nombre = nombre;
+        this.email = email;
         this.password = password;
         this.telefono = telefono;
-        this.rol = rol;
     }
 
     public String getNombre() {
@@ -19,6 +19,14 @@ public class PutUsuarioDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -35,13 +43,5 @@ public class PutUsuarioDTO {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
     }
 }

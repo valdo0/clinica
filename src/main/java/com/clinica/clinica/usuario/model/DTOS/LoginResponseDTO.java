@@ -1,4 +1,4 @@
-package com.clinica.clinica.usuario.model;
+package com.clinica.clinica.usuario.model.DTOS;
 
 import java.time.LocalDate;
 

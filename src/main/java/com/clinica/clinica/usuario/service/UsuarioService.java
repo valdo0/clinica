@@ -3,8 +3,8 @@ package com.clinica.clinica.usuario.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.clinica.clinica.exception.ResourceNotFoundException;
-import com.clinica.clinica.usuario.model.PutUsuarioDTO;
 import com.clinica.clinica.usuario.model.Usuario;
+import com.clinica.clinica.usuario.model.DTOS.PutUsuarioDTO;
 import com.clinica.clinica.usuario.repository.UsuarioRepository;
 
 import lombok.extern.slf4j.Slf4j;

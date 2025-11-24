@@ -1,0 +1,22 @@
+services:
+  backend:
+    image: backend-clinica
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - clinica-net
+
+  frontend:
+    image: frontend-clinica
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - clinica-net
+
+networks:
+  clinica-net:
+    driver: bridge

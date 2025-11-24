@@ -3,8 +3,8 @@ package com.clinica.clinica.usuario.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.clinica.clinica.usuario.model.PutUsuarioDTO;
 import com.clinica.clinica.usuario.model.Usuario;
+import com.clinica.clinica.usuario.model.DTOS.PutUsuarioDTO;
 import com.clinica.clinica.usuario.service.UsuarioService;
 
 import jakarta.validation.Valid;

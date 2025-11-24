@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.clinica.clinica.usuario.model.LoginRequestDTO;
-import com.clinica.clinica.usuario.model.LoginResponseDTO;
-import com.clinica.clinica.usuario.model.RegisterRequestDTO;
+import com.clinica.clinica.usuario.model.DTOS.LoginRequestDTO;
+import com.clinica.clinica.usuario.model.DTOS.LoginResponseDTO;
+import com.clinica.clinica.usuario.model.DTOS.MessageResponseDTO;
+import com.clinica.clinica.usuario.model.DTOS.PasswordRecoveryResponseDTO;
+import com.clinica.clinica.usuario.model.DTOS.RegisterRequestDTO;
+import com.clinica.clinica.usuario.model.DTOS.RequestPasswordRecoveryDTO;
+import com.clinica.clinica.usuario.model.DTOS.ResetPasswordDTO;
 import com.clinica.clinica.usuario.service.AuthService;
 
 @Slf4j
@@ -41,5 +45,20 @@ public class AuthController {
         Optional<LoginResponseDTO> responseOpt = authService.register(registerRequest);
 
         return ResponseEntity.ok(responseOpt);
+    }
+
+    @PostMapping("/request-password-recovery")
+    public ResponseEntity<PasswordRecoveryResponseDTO> requestPasswordRecovery(
+            @RequestBody RequestPasswordRecoveryDTO request) {
+        log.info("Request password recovery: {}", request.getEmail());
+        PasswordRecoveryResponseDTO response = authService.requestPasswordRecovery(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<MessageResponseDTO> resetPassword(@RequestBody ResetPasswordDTO request) {
+        log.info("Reset password: {}", request.getEmail());
+        MessageResponseDTO response = authService.resetPassword(request);
+        return ResponseEntity.ok(response);
     }
 }
